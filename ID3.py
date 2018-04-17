@@ -1,9 +1,40 @@
 from node import Node
-import math
+import math, copy
 
 def ID3(examples, default):
+    #Creating the new Node
+    root = Node()
+    root.dataset = copy.deepcopy(examples)
+    #Default Case: Examples is Empty
+    if examples == None:
+        root.label = default
+        return root
+    #Calculate num of instances of each key/value combo
+    attribute_dict = {}
+    example_length = len(examples)
+    for i in range(0, example_length):
+        for key, value in examples[i].iteritems():
+            if key not in attribute_dict:
+                attribute_dict[key] = {}
+            if value not in attribute_dict[key]:
+                attribute_dict[key][value] = 1
+            else:
+                attribute_dict[key][value] += 1
+    #Case 2: Examples all hae same classifcation
+    if len(attribute_dict["Class"]) == 1:
+        root.label = attribute_dict["Class"].keys()[0]
+        return root
+    #Case 3: Non-Trivial split is not possible. Find best att to split on
+    single_att = True
+    for key in attribute_dict:
+        if key != "Class" and len(attribute_dict[key]) > 1:
+            single_att = False
+            break
+    if single_att:
+        tree.label = max(attribute_dict["Class"].values())
+    
     print examples
-    print default
+
   # '''
   # Takes in an array of examples, and returns a tree (an instance of Node)
   # trained on the examples.  Each example is a dictionary of attribute:value pairs,

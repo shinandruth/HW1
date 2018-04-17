@@ -25,6 +25,7 @@ class Node:
   def __init__(self):
     self.children = {}
     self.label = None
+    
     self.decision_attribute = None
     self.nominal = None
     self.splitting_value = None
