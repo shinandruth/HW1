@@ -123,12 +123,12 @@ Calculates the highest value attribute
 def mode(node, att):
     cl = {}
     max = -1
-    best_att = cl[cl.keys()[0]]
     for example in node.examples:
         if example[att] not in cl:
             cl[example[att]] = 1
         else:
             cl[example[att]] += 1
+    best_att = cl[cl.keys()[0]]
     for key, value in cl.iteritems():
         if value > max:
             max = value
@@ -141,7 +141,35 @@ Takes in a trained tree and a validation set of examples.  Prunes nodes in order
 to improve accuracy on the validation data; the precise pruning strategy is up to you.
 '''
 def prune(node, examples):
-    print 0
+    pruned = True
+    acc = test(node, examples)
+    n = node
+    while pruned:
+        pruned = False
+        YE = [node]
+        node.examples = copy.deepcopy(examples)
+        while YE:
+            curr = YE.pop(0)
+            for k, v in curr.children.iteritems():
+                if v.children:
+                    for i in curr.examples:
+                        if i[curr.label] == k:
+                            v.examples.append(copy.deepcopy(i))
+                    v.pruned = True
+                    v.value = mode(v, "Class")
+                    curr_acc = test(node, examples)
+                    if curr_acc > acc:
+                        acc = curr_acc
+                        n = v
+                        pruned = True
+                    # else:
+                    #     pruned = False
+                    v.pruned = False
+                    YE.append(v)
+        if pruned:
+            n.label = n.value
+            n.children = {}
+    return node
 
 
 '''

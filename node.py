@@ -27,6 +27,7 @@ class Node:
     self.label = None
     self.examples = []
     self.pruned = False
+    self.amount = -1000
 
     self.decision_attribute = None
     self.nominal = None

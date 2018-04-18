@@ -94,4 +94,4 @@ if __name__ == "__main__":
     testID3AndEvaluate()
     testPruning()
     testID3AndTest()
-    #testPruningOnHouseData(inFile)
+    testPruningOnHouseData("house_votes_84.data")
