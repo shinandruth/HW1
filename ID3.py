@@ -156,20 +156,21 @@ def test(node, examples):
         if evaluate(node, i) == correct:
             correct_class += 1
     return float(correct_class)/l
+
 '''
 Takes in a tree and one example.  Returns the Class value that the tree
 assigns to the example.
 '''
 def evaluate(node, example):
-    if not node.children:
-        return node.label
     if node.pruned:
         return node.value
+    elif not node.children:
+        return node.label
     if example[node.label] == "?":
         best = mode(node, node.label)
         example[node.label] = best
         return evaluate(node.children[best], example)
-    for key, value in node.children.items():
-        if example[node.label] == key:
-            return evaluate(value, example)
+    for k, v in node.children.iteritems():
+        if example[node.label] == k:
+            return evaluate(v, example)
     return node.label
