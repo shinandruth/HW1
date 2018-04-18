@@ -136,24 +136,25 @@ def mode(node, att):
     return best_att
 
 
-
+'''
+Takes in a trained tree and a validation set of examples.  Prunes nodes in order
+to improve accuracy on the validation data; the precise pruning strategy is up to you.
+'''
 def prune(node, examples):
-    '''
-    Takes in a trained tree and a validation set of examples.  Prunes nodes in order
-    to improve accuracy on the validation data; the precise pruning strategy is up to you.
-    '''
+    print 0
 
 
+'''
+Takes in a trained tree and a test set of examples.  Returns the accuracy (fraction
+of examples the tree classifies correctly).
+'''
 def test(node, examples):
-    '''
-    Takes in a trained tree and a test set of examples.  Returns the accuracy (fraction
-    of examples the tree classifies correctly).
-    '''
     correct_class = 0
-    for i in examples:
-        if evaluate(node, i) == i['Class']:
-            correct_class += 1
     l = len(examples)
+    for i in examples:
+        correct = i['Class']
+        if evaluate(node, i) == correct:
+            correct_class += 1
     return float(correct_class)/l
 '''
 Takes in a tree and one example.  Returns the Class value that the tree
