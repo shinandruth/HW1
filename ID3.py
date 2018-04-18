@@ -1,11 +1,51 @@
 from node import Node
 import math, copy
 
+def H(pi):
+    return float(-pi*math.log(pi,2))
+
+'''
+Calculates the entropy of example
+'''
+def entropy(examples):
+    cl = {}
+    l = len(examples)
+    h = 0
+    for i in range(0, l):
+        if examples[i]["Class"] not in cl:
+            cl[examples[i]["Class"]] = 1
+        else:
+            cl[examples[i]["Class"]] += 1
+    for value in cl.values():
+        h += H(float(value)/l)
+    return h
+
 '''
 Calculate the Information Gain of a specific attribute
 '''
 def infoGain(examples, a):
-    
+    unknown = []
+    sum = float(0)
+    max = -1
+    d = {}
+    l = len(examples)
+    new_gain = entropy(examples)
+    for i in range(0, l):
+        sum += 1
+        if examples[i][a] == "?":
+            unknown.append(examples[i])
+        if examples[i][a] not in d:
+            d[examples[i][a]] == examples[i]
+        else:
+            d[examples[i][a]].append(examples[i])
+    for value in d.values():
+        if value > max:
+            max = value
+    for value in d.values():
+        if value == max:
+            value += unknown
+        new_gain -= (entropy(value)*(len(value)/sum))
+    return new_gain
 
 '''
 Picks the best attribute to split on (i.e., highest information gain)
@@ -24,8 +64,6 @@ def chooseAttribute(examples):
             best = a
     return best
 
-
-
 '''
 Takes in an array of examples, and returns a tree (an instance of Node)
 trained on the examples.  Each example is a dictionary of attribute:value pairs,
@@ -33,7 +71,9 @@ and the target class variable is a special attribute with the name "Class".
 Any missing attributes are denoted with a value of "?"
 '''
 def ID3(examples, default):
-    #print examples
+    # for i in range(0, len(examples)):
+    #     print "MY TESTER: ", examples[i]["Class"]
+    # print examples
     #Creating the new Node
     root = Node()
     root.dataset = copy.deepcopy(examples)
@@ -65,9 +105,15 @@ def ID3(examples, default):
     if single_att:
         tree.label = max(attribute_dict["Class"].values())
         return root
+    #Find the highest info gain attribute
     best = chooseAttribute(examples)
+    root.label = best
+'''
+I STILL NEED TO FINISH THIS LAST PART!
+'''
+    for
 
-    print best
+    #print best
 
 def prune(node, examples):
   '''
