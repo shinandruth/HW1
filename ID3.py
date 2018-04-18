@@ -25,17 +25,15 @@ Calculate the Information Gain of a specific attribute
 '''
 def infoGain(examples, a):
     unknown = []
-    sum = float(0)
     max = -1
     d = {}
     l = len(examples)
     new_gain = entropy(examples)
-    for i in range(0, l):
-        sum += 1
+    for i in range(l):
         if examples[i][a] == "?":
             unknown.append(examples[i])
         if examples[i][a] not in d:
-            d[examples[i][a]] == examples[i]
+            d[examples[i][a]] = [examples[i]]
         else:
             d[examples[i][a]].append(examples[i])
     for value in d.values():
@@ -44,7 +42,7 @@ def infoGain(examples, a):
     for value in d.values():
         if value == max:
             value += unknown
-        new_gain -= (entropy(value)*(len(value)/sum))
+        new_gain -= (entropy(value)*(len(value)/float(l)))
     return new_gain
 
 '''
@@ -73,18 +71,17 @@ Any missing attributes are denoted with a value of "?"
 def ID3(examples, default):
     # for i in range(0, len(examples)):
     #     print "MY TESTER: ", examples[i]["Class"]
-    # print examples
     #Creating the new Node
     root = Node()
-    root.dataset = copy.deepcopy(examples)
+    root.examples = copy.deepcopy(examples)
     #Default Case: Examples is Empty
     if examples == None:
         root.label = default
         return root
     #Calculate num of instances of each key/value combo
     attribute_dict = {}
-    example_length = len(examples)
-    for i in range(0, example_length):
+    l = len(examples)
+    for i in range(0, l):
         for key, value in examples[i].iteritems():
             if key not in attribute_dict:
                 attribute_dict[key] = {}
@@ -108,12 +105,18 @@ def ID3(examples, default):
     #Find the highest info gain attribute
     best = chooseAttribute(examples)
     root.label = best
-'''
-I STILL NEED TO FINISH THIS LAST PART!
-'''
-    for
+    print"------best-----", best
+    for val in attribute_dict[best].keys():
+        ex = []
+        for j in range(l):
+            if examples[j][best] == val:
+                ex.append(copy.deepcopy(examples[j]))
+                ex[len(ex)-1].pop(best)
+        subtree = ID3(ex, max(attribute_dict["Class"].values()))
+        root.children[val] = subtree
+    return root
 
-    #print best
+            #if examples[j][best] == i:
 
 def prune(node, examples):
   '''
