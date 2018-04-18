@@ -1,7 +1,39 @@
 from node import Node
 import math, copy
 
+'''
+Calculate the Information Gain of a specific attribute
+'''
+def infoGain(examples, a):
+    
+
+'''
+Picks the best attribute to split on (i.e., highest information gain)
+'''
+def chooseAttribute(examples):
+    max = -1
+    attr = examples[0].keys()
+    attr.remove("Class")
+
+    #Calcuate the attr with highest info gain
+    best = attr[0]
+    for a in attr:
+        curr = infoGain(examples, a)
+        if curr > max:
+            max = curr
+            best = a
+    return best
+
+
+
+'''
+Takes in an array of examples, and returns a tree (an instance of Node)
+trained on the examples.  Each example is a dictionary of attribute:value pairs,
+and the target class variable is a special attribute with the name "Class".
+Any missing attributes are denoted with a value of "?"
+'''
 def ID3(examples, default):
+    #print examples
     #Creating the new Node
     root = Node()
     root.dataset = copy.deepcopy(examples)
@@ -32,15 +64,10 @@ def ID3(examples, default):
             break
     if single_att:
         tree.label = max(attribute_dict["Class"].values())
-    
-    print examples
+        return root
+    best = chooseAttribute(examples)
 
-  # '''
-  # Takes in an array of examples, and returns a tree (an instance of Node)
-  # trained on the examples.  Each example is a dictionary of attribute:value pairs,
-  # and the target class variable is a special attribute with the name "Class".
-  # Any missing attributes are denoted with a value of "?"
-  # '''
+    print best
 
 def prune(node, examples):
   '''
