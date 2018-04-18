@@ -105,7 +105,6 @@ def ID3(examples, default):
     #Find the highest info gain attribute
     best = chooseAttribute(examples)
     root.label = best
-    print"------best-----", best
     for val in attribute_dict[best].keys():
         ex = []
         for j in range(l):
@@ -118,8 +117,23 @@ def ID3(examples, default):
 
             #if examples[j][best] == i:
 
-def mode(node, attribute):
-    
+'''
+Calculates the highest value attribute
+'''
+def mode(node, att):
+    cl = {}
+    max = -1
+    best_att = cl[cl.keys()[0]]
+    for example in node.examples:
+        if example[att] not in cl:
+            cl[example[att]] = 1
+        else:
+            cl[example[att]] += 1
+    for key, value in cl.iteritems():
+        if value > max:
+            max = value
+            best_att = key
+    return best_att
 
 
 
@@ -136,19 +150,18 @@ def test(node, examples):
     of examples the tree classifies correctly).
     '''
     correctClass = 0
-    for x in examples:
+    #for x in examples:
 
+'''
+Takes in a tree and one example.  Returns the Class value that the tree
+assigns to the example.
+'''
 
 def evaluate(node, example):
-    '''
-    Takes in a tree and one example.  Returns the Class value that the tree
-    assigns to the example.
-    '''
     if not node.children:
         return node.label
-
     if node.pruned:
         return node.value
+    best = mode(node, node.label)
 
-    if node.label == "?":
-
+    #if node.label == "?":

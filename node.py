@@ -26,6 +26,7 @@ class Node:
     self.children = {}
     self.label = None
     self.examples = []
+    self.pruned = False
 
     self.decision_attribute = None
     self.nominal = None
