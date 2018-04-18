@@ -27,4 +27,6 @@ class Node:
     self.label = None
     self.examples = []
     self.pruned = False
-    self.amount = -1000
+    self.value = -1000
+
+	# you may want to add additional fields here...
