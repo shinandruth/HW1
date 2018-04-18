@@ -27,6 +27,6 @@ class Node:
     self.label = None
     self.examples = []
     self.pruned = False
-    self.value = -1000
+    self.value = "None"
 
 	# you may want to add additional fields here...
