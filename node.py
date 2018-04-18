@@ -28,9 +28,3 @@ class Node:
     self.examples = []
     self.pruned = False
     self.amount = -1000
-
-    self.decision_attribute = None
-    self.nominal = None
-    self.splitting_value = None
-    self.name = None
-	# you may want to add additional fields here...
