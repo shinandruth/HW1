@@ -118,21 +118,37 @@ def ID3(examples, default):
 
             #if examples[j][best] == i:
 
+def mode(node, attribute):
+    
+
+
+
 def prune(node, examples):
-  '''
-  Takes in a trained tree and a validation set of examples.  Prunes nodes in order
-  to improve accuracy on the validation data; the precise pruning strategy is up to you.
-  '''
+    '''
+    Takes in a trained tree and a validation set of examples.  Prunes nodes in order
+    to improve accuracy on the validation data; the precise pruning strategy is up to you.
+    '''
+
 
 def test(node, examples):
-  '''
-  Takes in a trained tree and a test set of examples.  Returns the accuracy (fraction
-  of examples the tree classifies correctly).
-  '''
+    '''
+    Takes in a trained tree and a test set of examples.  Returns the accuracy (fraction
+    of examples the tree classifies correctly).
+    '''
+    correctClass = 0
+    for x in examples:
 
 
 def evaluate(node, example):
-  '''
-  Takes in a tree and one example.  Returns the Class value that the tree
-  assigns to the example.
-  '''
+    '''
+    Takes in a tree and one example.  Returns the Class value that the tree
+    assigns to the example.
+    '''
+    if not node.children:
+        return node.label
+
+    if node.pruned:
+        return node.value
+
+    if node.label == "?":
+
