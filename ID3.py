@@ -144,10 +144,11 @@ def prune(node, examples):
     pruned = True
     acc = test(node, examples)
     n = node
+
     while pruned:
         pruned = False
-        YE = [node]
         node.examples = copy.deepcopy(examples)
+        YE = [node]
         while YE:
             curr = YE.pop(0)
             for k, v in curr.children.iteritems():
