@@ -100,7 +100,7 @@ def ID3(examples, default):
             single_att = False
             break
     if single_att:
-        tree.label = max(attribute_dict["Class"].values())
+        root.label = max(attribute_dict["Class"].values())
         return root
     #Find the highest info gain attribute
     best = chooseAttribute(examples)
@@ -162,6 +162,13 @@ def evaluate(node, example):
         return node.label
     if node.pruned:
         return node.value
-    best = mode(node, node.label)
 
-    #if node.label == "?":
+    if example[node.label] == "?":
+        best = mode(node, node.label)
+        example[node.label] = best
+        return evaluate(node.children[best], example)
+
+    for key, value in node.children.items():
+        if example[node.label] == key:
+            return evaluate(value, example)
+    return node.label
