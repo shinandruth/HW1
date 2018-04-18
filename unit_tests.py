@@ -92,6 +92,6 @@ def testPruningOnHouseData(inFile):
 
 if __name__ == "__main__":
     testID3AndEvaluate()
-    #testPruning()
-    #testID3AndTest()
+    testPruning()
+    testID3AndTest()
     #testPruningOnHouseData(inFile)
